@@ -1,25 +1,14 @@
 #include <Arduino.h>
-#define SWITCH_PIN 2 // ขาที่ต่อกับสวิตช์
-#define LED_PIN 13   // LED บนบอร์ด
-
+#define LED_PIN 13       // ตั้งชื่อให้ขา 13 ว่า LED_PIN
+#define BLINK_DELAY 1000 // ตั้งค่าเวลาหน่วง 1000ms = 1 วินาที
 void setup() {
-    // ใช้ INPUT_PULLUP เพื่อเปิดใช้งานตัวต้านทานภายใน
-    pinMode(SWITCH_PIN, INPUT_PULLUP);
-    pinMode(LED_PIN, OUTPUT);
-    Serial.begin(9600);
+    pinMode(LED_PIN, OUTPUT); // กำหนดให้ขา LED_PIN เป็นขา Output
 }
 
 void loop() {
-    // อ่านสถานะของสวิตช์
-    int buttonState = digitalRead(SWITCH_PIN);
+    digitalWrite(LED_PIN, HIGH); // สั่งให้ LED ติด (HIGH)
+    delay(BLINK_DELAY);          // รอตามเวลาที่กำหนด
 
-    // ถ้าสถานะเป็น LOW (แปลว่าถูกกด)
-    if (buttonState == LOW) {
-        digitalWrite(LED_PIN, HIGH); // ให้ LED ติด
-        Serial.println("Switch PRESSED");
-    } else { // ถ้าไม่ใช่ (เป็น HIGH แปลว่าถูกปล่อย)
-        digitalWrite(LED_PIN, LOW); // ให้ LED ดับ
-        Serial.println("Switch RELEASED");
-    }
-    delay(50); // หน่วงเวลาเล็กน้อยเพื่อลดการอ่านค่าที่ผิดพลาด
+    digitalWrite(LED_PIN, LOW);  // สั่งให้ LED ดับ (LOW)
+    delay(BLINK_DELAY);          // รอ
 }
