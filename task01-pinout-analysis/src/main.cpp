@@ -1,14 +1,20 @@
 #include <Arduino.h>
-#define LED_PIN 13       // ตั้งชื่อให้ขา 13 ว่า LED_PIN
-#define BLINK_DELAY 1000 // ตั้งค่าเวลาหน่วง 1000ms = 1 วินาที
 void setup() {
-    pinMode(LED_PIN, OUTPUT); // กำหนดให้ขา LED_PIN เป็นขา Output
+    Serial.begin(9600); // เริ่มการสื่อสารกับคอมพิวเตอร์
+    Serial.println("=== Arduino UNO R3 Pin Test ===");
+
+    // ทดสอบขา Digital 2 ถึง 13
+    for(int pin = 2; pin <= 13; pin++) {
+        pinMode(pin, OUTPUT);   // ตั้งค่าให้เป็นขาจ่ายไฟออก
+        digitalWrite(pin, HIGH);  // สั่งให้จ่ายไฟ
+        delay(100);             // รอ 0.1 วินาที
+        digitalWrite(pin, LOW);   // สั่งให้หยุดจ่ายไฟ
+        Serial.print("Pin ");
+        Serial.print(pin);
+        Serial.println(" OK");
+    }
 }
 
 void loop() {
-    digitalWrite(LED_PIN, HIGH); // สั่งให้ LED ติด (HIGH)
-    delay(BLINK_DELAY);          // รอตามเวลาที่กำหนด
-
-    digitalWrite(LED_PIN, LOW);  // สั่งให้ LED ดับ (LOW)
-    delay(BLINK_DELAY);          // รอ
+    // ไม่ต้องทำอะไรใน loop
 }
