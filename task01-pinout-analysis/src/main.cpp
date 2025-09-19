@@ -1,20 +1,25 @@
-#include <Arduino.h> 
-void setup() {
-    Serial.begin(9600); // เริ่มการสื่อสารกับคอมพิวเตอร์
-    Serial.println("=== Arduino UNO R3 Pin Test ===");
+#include <Arduino.h>
+#define SWITCH_PIN 2 // ขาที่ต่อกับสวิตช์
+#define LED_PIN 13   // LED บนบอร์ด
 
-    // ทดสอบขา Digital 2 ถึง 13
-    for(int pin = 2; pin <= 13; pin++) {
-        pinMode(pin, OUTPUT);   // ตั้งค่าให้เป็นขาจ่ายไฟออก
-        digitalWrite(pin, HIGH);  // สั่งให้จ่ายไฟ
-        delay(100);             // รอ 0.1 วินาที
-        digitalWrite(pin, LOW);   // สั่งให้หยุดจ่ายไฟ
-        Serial.print("Pin ");
-        Serial.print(pin);
-        Serial.println(" OK");
-    }
+void setup() {
+    // ใช้ INPUT_PULLUP เพื่อเปิดใช้งานตัวต้านทานภายใน
+    pinMode(SWITCH_PIN, INPUT_PULLUP);
+    pinMode(LED_PIN, OUTPUT);
+    Serial.begin(9600);
 }
 
 void loop() {
-    // ไม่ต้องทำอะไรใน loop
+    // อ่านสถานะของสวิตช์
+    int buttonState = digitalRead(SWITCH_PIN);
+
+    // ถ้าสถานะเป็น LOW (แปลว่าถูกกด)
+    if (buttonState == LOW) {
+        digitalWrite(LED_PIN, HIGH); // ให้ LED ติด
+        Serial.println("Switch PRESSED");
+    } else { // ถ้าไม่ใช่ (เป็น HIGH แปลว่าถูกปล่อย)
+        digitalWrite(LED_PIN, LOW); // ให้ LED ดับ
+        Serial.println("Switch RELEASED");
+    }
+    delay(50); // หน่วงเวลาเล็กน้อยเพื่อลดการอ่านค่าที่ผิดพลาด
 }
